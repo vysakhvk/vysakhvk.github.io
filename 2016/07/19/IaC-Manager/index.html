@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Creating a Managment Environment in AWS with terraform. | Pragmatic approach to Microservice Architecture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="IaC: Manager Node (Jump Server)This terraform script will setup an infra for management in AWS:
+
+CentOS (Manager Node)
+VPC
+Public subnet
+Internet gateway
+
+Pre-requisites
+An IAM account with administra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating a Managment Environment in AWS with terraform.">
+<meta property="og:url" content="https://microservices-today.github.io/2016/07/19/IaC-Manager/index.html">
+<meta property="og:site_name" content="Pragmatic approach to Microservice Architecture">
+<meta property="og:description" content="IaC: Manager Node (Jump Server)This terraform script will setup an infra for management in AWS:
+
+CentOS (Manager Node)
+VPC
+Public subnet
+Internet gateway
+
+Pre-requisites
+An IAM account with administra">
+<meta property="og:image" content="https://microservices-today.github.io/images/iac-manager.jpg">
+<meta property="og:updated_time" content="2016-11-08T12:08:03.272Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Creating a Managment Environment in AWS with terraform.">
+<meta name="twitter:description" content="IaC: Manager Node (Jump Server)This terraform script will setup an infra for management in AWS:
+
+CentOS (Manager Node)
+VPC
+Public subnet
+Internet gateway
+
+Pre-requisites
+An IAM account with administra">
+<meta name="twitter:image" content="https://microservices-today.github.io/images/iac-manager.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Pragmatic approach to Microservice Architecture" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-81494423-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pragmatic approach to Microservice Architecture</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+            
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main"><article id="iac-manager-IaC-Manager" class="article article-type-iac-manager" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/images/iac-manager.jpg" class="article-banner" />
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Creating a Managment Environment in AWS with terraform.
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/07/19/IaC-Manager/">
+            <time datetime="2016-07-19T05:50:30.000Z" itemprop="datePublished">2016-07-19</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/manager/">manager</a>
+    </div>
+
+                        
+
+
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-manager&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-manager&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="IaC-Manager-Node-Jump-Server"><a href="#IaC-Manager-Node-Jump-Server" class="headerlink" title="IaC: Manager Node (Jump Server)"></a>IaC: Manager Node (Jump Server)</h3><p>This terraform script will setup an infra for management in AWS:</p>
+<ul>
+<li>CentOS (Manager Node)</li>
+<li>VPC</li>
+<li>Public subnet</li>
+<li>Internet gateway</li>
+</ul>
+<h4 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites"></a>Pre-requisites</h4><ul>
+<li>An IAM account with administrator privileges.</li>
+<li>Install <a href="https://www.terraform.io/intro/getting-started/install.html" target="_blank" rel="external">terraform</a> on your machine.</li>
+<li><p>Public Key Access with Agent support/ Agent Forwarding:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh-add &lt;key_pair_name&gt;.pem</div><div class="line">ssh -A centos@&lt;manager_public_ip&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Steps-for-installation"><a href="#Steps-for-installation" class="headerlink" title="Steps for installation"></a>Steps for installation</h4><ul>
+<li>Clone this repo .</li>
+<li><code>cp terraform.dummy terraform.tfvars</code></li>
+<li>Modify params in <code>terraform.tfvars</code></li>
+<li>Modify params in <code>variable.tf</code> to change subnet or add AMI accordingly to your aws region</li>
+<li><p>Export AWS credentials as bash variables (e.g. <code>ap-northeast-1</code> for Tokyo and <code>ap-southeast-1</code> for Singapore region):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> AWS_ACCESS_KEY_ID=<span class="string">"anaccesskey"</span></div><div class="line"><span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=<span class="string">"asecretkey"</span></div><div class="line"><span class="built_in">export</span> AWS_DEFAULT_REGION=<span class="string">"ap-northeast-1"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>terraform plan</code> to see the plan to execute.</p>
+</li>
+<li>Run <code>terraform apply</code> to run the scripts.</li>
+<li>You may have <code>prod/dev/stage</code> configurations in<br><code>terraform.tfvars.{prod/dev/stage}</code> files (already ignored by <code>.gitignore</code>).</li>
+</ul>
+<h4 id="Generate-Docs"><a href="#Generate-Docs" class="headerlink" title="Generate Docs"></a>Generate Docs</h4><p>Generate terraform documentation by running <code>bash generate-docs.sh</code></p>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><ul>
+<li>SSH into the manager node and check whether <code>terraform.out</code> in <code>home/centos</code> contains:<br>a record of the VPC, Subnet, Security Group and Nat gateway ID.</li>
+<li>More details on <a href="https://github.com/segmentio/terraform-docs" target="_blank" rel="external">terraform-docs</a>.</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/07/19/IaC-Manager/" data-id="civ9gj01v0005rjlnd6en5gpj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/07/19/IaC-Manager/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/07/19/IaC-Manager/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/07/21/IaC-dcos/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Creating a DCOS cluster in AWS using terraform.
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/03/DCOS-Disaster-Recovery/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/03/DCOS-Disaster-Recovery/" class="title">DCOS Disaster Recovery</a></p>
+                            <p class="item-date"><time datetime="2016-11-03T11:37:05.000Z" itemprop="datePublished">2016-11-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/31/Debugging-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/31/Debugging-DCOS/" class="title">Debugging DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-31T03:39:33.000Z" itemprop="datePublished">2016-10-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/" class="title">Troubleshoot CoreOS in general which you will need in DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-30T03:37:29.000Z" itemprop="datePublished">2016-10-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/" class="title">Troubleshooting common scenarios in DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-29T10:20:49.000Z" itemprop="datePublished">2016-10-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/28/Nginx-Marathon-App-example/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/28/Nginx-Marathon-App-example/" class="title">Nginx Marathon App example</a></p>
+                            <p class="item-date"><time datetime="2016-10-28T09:15:38.000Z" itemprop="datePublished">2016-10-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DCOS-Disaster-Recovery/">DCOS Disaster Recovery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debugging-DCOS/">Debugging DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx-Marathon-App-example/">Nginx Marathon App example</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Troubleshoot-CoreOS-in-DCOS/">Troubleshoot CoreOS in DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Troubleshooting-common-scenarios-in-DCOS/">Troubleshooting common scenarios in DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dcos/">dcos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manager/">manager</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/DCOS-Disaster-Recovery/" style="font-size: 10px;">DCOS Disaster Recovery</a> <a href="/tags/Debugging-DCOS/" style="font-size: 10px;">Debugging DCOS</a> <a href="/tags/Nginx-Marathon-App-example/" style="font-size: 20px;">Nginx Marathon App example</a> <a href="/tags/Troubleshoot-CoreOS-in-DCOS/" style="font-size: 10px;">Troubleshoot CoreOS in DCOS</a> <a href="/tags/Troubleshooting-common-scenarios-in-DCOS/" style="font-size: 10px;">Troubleshooting common scenarios in DCOS</a> <a href="/tags/dcos/" style="font-size: 10px;">dcos</a> <a href="/tags/manager/" style="font-size: 10px;">manager</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 microservices-today<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://microservices-today.github.io/2016/07/19/IaC-Manager/';
+        
+        this.page.identifier = 'IaC-Manager';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'microservicestoday' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

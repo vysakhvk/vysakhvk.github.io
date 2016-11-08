@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Pragmatic approach to Microservice Architecture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Pragmatic approach to Microservice Architecture">
+<meta property="og:url" content="https://microservices-today.github.io/index.html">
+<meta property="og:site_name" content="Pragmatic approach to Microservice Architecture">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pragmatic approach to Microservice Architecture">
+    
+
+    
+        <link rel="alternate" href="/" title="Pragmatic approach to Microservice Architecture" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-81494423-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Pragmatic approach to Microservice Architecture</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+            
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            <section id="main">
+    <article id="post-DCOS-Disaster-Recovery" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/11/03/DCOS-Disaster-Recovery/">DCOS Disaster Recovery</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/03/DCOS-Disaster-Recovery/">
+            <time datetime="2016-11-03T11:37:05.000Z" itemprop="datePublished">2016-11-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DCOS-Disaster-Recovery/">DCOS Disaster Recovery</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="Marathon-App-Recovery"><a href="#Marathon-App-Recovery" class="headerlink" title="Marathon App Recovery"></a>Marathon App Recovery</h3><h4 id="Taking-Marathon-Snapshots"><a href="#Taking-Marathon-Snapshots" class="headerlink" title="Taking Marathon Snapshots"></a>Taking Marathon Snapshots</h4><p><a href="https://github.com/microservices-today/IaC-marathon-snapshots" target="_blank" rel="external">Marathon snapshot</a> IaC is used to take snapshots of marathon applications. These snapshots are stored in a S3 bucket (Bucket name is specified while running NGP). This is performed by running a Lambda function which is periodically triggered by a CloudWatch metric. This app takes snapshots of marathon applications every hour. The IaC, also creates an AWS API gateway to trigger the Lambda function in order to restore the marathon snapshot.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/11/03/DCOS-Disaster-Recovery/" data-id="civ9gj01g0000rjlnvz1j7rfy" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/11/03/DCOS-Disaster-Recovery/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/11/03/DCOS-Disaster-Recovery/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Debugging-DCOS" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/31/Debugging-DCOS/">Debugging DCOS</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/31/Debugging-DCOS/">
+            <time datetime="2016-10-31T03:39:33.000Z" itemprop="datePublished">2016-10-31</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Debugging-DCOS/">Debugging DCOS</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="Steps-To-be-discussed-and-updated"><a href="#Steps-To-be-discussed-and-updated" class="headerlink" title="Steps - To be discussed and updated"></a>Steps - To be discussed and updated</h3><p>For troubleshooting, once we ssh into the machine create a folder in <code>/home/core/debugging</code> and make sure that the backups of the configurations to be kept there.</p>
+<p>Before closing the ssh session <code>history &gt;&gt; /home/core/debugging/history</code> to keep a track of the steps you have performed to troubleshoot.</p>
+<p>Once you back into the manager:</p>
+<ol>
+<li><p>For easy troubleshooting install JQ from steps below.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget http://stedolan.github.io/jq/download/linux64/jq </div><div class="line">chmod +x ./jq </div><div class="line">cp jq /usr/bin</div></pre></td></tr></table></figure>
+</li>
+<li><p>To compress the debugging folder of each slaves.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">for i in $(curl -sS 10.0.3.89:5050/slaves | jq &apos;.slaves[] | .hostname&apos; | tr -d &apos;&quot;&apos;); do ssh &quot;core@$i&quot; &quot;sudo tar -zcvf debugging-$i.tar.gz debugging&quot;; done</div><div class="line"></div><div class="line">mkdir debugging</div><div class="line"></div><div class="line">for i in $(curl -sS 10.0.3.89:5050/slaves | jq &apos;.slaves[] | .hostname&apos; | tr -d &apos;&quot;&apos;); do scp &quot;core@$i:/home/core/debugging-$i.tar.gz&quot; &quot;debugging/&quot;; done</div><div class="line"></div><div class="line">tar -zvcf debugging.tar.gz debugging</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Either we can scp the compressed file to our local machine or push it to an s3 bucket.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/31/Debugging-DCOS/" data-id="civ9gj01o0002rjlnc4b91qxb" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/31/Debugging-DCOS/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/31/Debugging-DCOS/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/">Troubleshoot CoreOS in general which you will need in DCOS</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/">
+            <time datetime="2016-10-30T03:37:29.000Z" itemprop="datePublished">2016-10-30</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Troubleshoot-CoreOS-in-DCOS/">Troubleshoot CoreOS in DCOS</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>These are supposed to be the steps followed to troubleshoot CoreOS in general.</p>
+<p><code>ssh</code> into the machine and check for initial login warnings.</p>
+<p><code>systemctl status</code>, this will list out the status of different services.</p>
+<p><code>systemctl list-units</code>, this will list the services with their status</p>
+<p><code>systemctl status name.service</code>, to find out the status of individual services.</p>
+<p><code>journalctl -u name.service</code>, to list out the logs of service.</p>
+<p>You can use various journalctl parameter combination to fetch the logs of different time.</p>
+<h3 id="Systemctl-Cheatsheet"><a href="#Systemctl-Cheatsheet" class="headerlink" title="Systemctl Cheatsheet"></a>Systemctl Cheatsheet</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start application.service</div><div class="line">sudo systemctl stop application.service</div><div class="line">sudo systemctl restart application.service</div><div class="line">sudo systemctl reload application.service</div><div class="line">sudo systemctl reload-or-restart application.service</div><div class="line">sudo systemctl enable application.service</div><div class="line">sudo systemctl disable application.service</div><div class="line">sudo systemctl status application.service</div><div class="line">sudo systemctl try-restart application.service</div></pre></td></tr></table></figure>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs" target="_blank" rel="external">Journalctl Cheatsheet</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/" data-id="civ9gj028000brjlnymv4k0c3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Troubleshooting-common-scenarios-in-DCOS" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/">Troubleshooting common scenarios in DCOS</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/">
+            <time datetime="2016-10-29T10:20:49.000Z" itemprop="datePublished">2016-10-29</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Troubleshooting-common-scenarios-in-DCOS/">Troubleshooting common scenarios in DCOS</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>This doc contains information on how to troubleshoot common scenarios.</p>
+<h3 id="Disk-space-issue"><a href="#Disk-space-issue" class="headerlink" title="Disk space issue"></a>Disk space issue</h3><p>The instance running dcos might get filled up and dcos can fail.<br>This can lead to unhealthy agents which may not respond to the Mesos.<br>Follow the steps below to troubleshoot the scenario.</p>
+<p>If able to identify the source of high disk space,<br>try to do the cleanup and bring back the disk space.<br>If there is a failure/bad configuration with docker,<br>the <code>/var/lib/docker/overlay</code> folder can get used up. </p>
+<ol>
+<li>If able to identify the docker we can stop the container and it is not advised to delete the instance.</li>
+<li>Disk space used by jenkins containers.<br>We have had scenarios where the jenkins backup getting accumulated and using up the space.<br>Stopping the backup plugin and deleting the backup from the container can resolve the issue.</li>
+<li>If the above scenarios and scenario does not help,<br>we can stop the instance from the console and wait for the auto scaling configuration to bring up new agents.</li>
+</ol>
+<h3 id="IPTables-blocking-marathon-lb-ports"><a href="#IPTables-blocking-marathon-lb-ports" class="headerlink" title="IPTables blocking marathon-lb ports"></a>IPTables blocking marathon-lb ports</h3><p>This is where the <code>iptables</code> of the instances are setup to block the ports of marathon-lb and resulting timeouts.<br>You can use the below scripts to backup and flush the <code>iptables</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">for i in $(curl -sS leader-ip:5050/slaves | jq &apos;.slaves[] | .hostname&apos; | tr -d &apos;&quot;&apos;); do ssh &quot;core@$i&quot; &quot;mkdir -p debugging &amp;&amp; sudo iptables-save &gt;&gt; debugging/iptables-backup &amp;&amp; sudo iptables -F&quot;; done</div></pre></td></tr></table></figure>
+<h3 id="Marathon-service-down"><a href="#Marathon-service-down" class="headerlink" title="Marathon service down"></a>Marathon service down</h3><p>This scenario occurs when the marathon service running in one of the masters fails and does not restart on its own.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">journalctl  -u dcos-marathon.service</div><div class="line">systemctl try-restart dcos-marathon.service</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/" data-id="civ9gj029000drjlnfoo9hikz" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Nginx-Marathon-App-example" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/28/Nginx-Marathon-App-example/">Nginx Marathon App example</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/28/Nginx-Marathon-App-example/">
+            <time datetime="2016-10-28T09:15:38.000Z" itemprop="datePublished">2016-10-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Nginx-Marathon-App-example/">Nginx Marathon App example</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Here is an example how to run Nginx Marathon App in DCOS with <a href="https://docs.mesosphere.com/1.8/usage/service-discovery/load-balancing-vips/virtual-ip-addresses/" target="_blank" rel="external">VIP</a>: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;id&quot;: &quot;nginx&quot;,</div><div class="line">  &quot;cmd&quot;: null,</div><div class="line">  &quot;cpus&quot;: 1,</div><div class="line">  &quot;mem&quot;: 128,</div><div class="line">  &quot;disk&quot;: 0,</div><div class="line">  &quot;instances&quot;: 1,</div><div class="line">  &quot;container&quot;: &#123;</div><div class="line">    &quot;docker&quot;: &#123;</div><div class="line">      &quot;image&quot;: &quot;nginx&quot;,</div><div class="line">      &quot;network&quot;: &quot;BRIDGE&quot;,</div><div class="line">      &quot;portMappings&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;containerPort&quot;: 80,</div><div class="line">          &quot;protocol&quot;: &quot;tcp&quot;,</div><div class="line">          &quot;name&quot;: null,</div><div class="line">          &quot;labels&quot;: &#123;</div><div class="line">            &quot;VIP_0&quot;: &quot;1.1.1.4:8000&quot;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &quot;type&quot;: &quot;DOCKER&quot;,</div><div class="line">    &quot;volumes&quot;: []</div><div class="line">  &#125;,</div><div class="line">  &quot;env&quot;: &#123;&#125;,</div><div class="line">  &quot;labels&quot;: &#123;</div><div class="line">    &quot;HAPROXY_GROUP&quot;: &quot;external&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;healthChecks&quot;: []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/28/Nginx-Marathon-App-example/" data-id="civ9gj0220007rjlncy76o9jo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/28/Nginx-Marathon-App-example/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/28/Nginx-Marathon-App-example/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-sysdig/sysdig" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/28/sysdig/sysdig/">Sysdig</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/28/sysdig/sysdig/">
+            <time datetime="2016-10-28T09:15:38.000Z" itemprop="datePublished">2016-10-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Nginx-Marathon-App-example/">Nginx Marathon App example</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Here is an example how to run Nginx Marathon App in DCOS with <a href="https://docs.mesosphere.com/1.8/usage/service-discovery/load-balancing-vips/virtual-ip-addresses/" target="_blank" rel="external">VIP</a>: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;id&quot;: &quot;nginx&quot;,</div><div class="line">  &quot;cmd&quot;: null,</div><div class="line">  &quot;cpus&quot;: 1,</div><div class="line">  &quot;mem&quot;: 128,</div><div class="line">  &quot;disk&quot;: 0,</div><div class="line">  &quot;instances&quot;: 1,</div><div class="line">  &quot;container&quot;: &#123;</div><div class="line">    &quot;docker&quot;: &#123;</div><div class="line">      &quot;image&quot;: &quot;nginx&quot;,</div><div class="line">      &quot;network&quot;: &quot;BRIDGE&quot;,</div><div class="line">      &quot;portMappings&quot;: [</div><div class="line">        &#123;</div><div class="line">          &quot;containerPort&quot;: 80,</div><div class="line">          &quot;protocol&quot;: &quot;tcp&quot;,</div><div class="line">          &quot;name&quot;: null,</div><div class="line">          &quot;labels&quot;: &#123;</div><div class="line">            &quot;VIP_0&quot;: &quot;1.1.1.4:8000&quot;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &quot;type&quot;: &quot;DOCKER&quot;,</div><div class="line">    &quot;volumes&quot;: []</div><div class="line">  &#125;,</div><div class="line">  &quot;env&quot;: &#123;&#125;,</div><div class="line">  &quot;labels&quot;: &#123;</div><div class="line">    &quot;HAPROXY_GROUP&quot;: &quot;external&quot;</div><div class="line">  &#125;,</div><div class="line">  &quot;healthChecks&quot;: []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/28/sysdig/sysdig/" data-id="civ9gj03k000orjlnmaicfhzh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/28/sysdig/sysdig/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/28/sysdig/sysdig/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-The-Next-Gen-Platform" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<a href="/2016/10/22/The-Next-Gen-Platform/" itemprop="url">
+            <img src="/images/iac-dcos.jpg" class="article-banner" />
+        </a>
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/22/The-Next-Gen-Platform/">The Next Generation Platform</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/22/The-Next-Gen-Platform/">
+            <time datetime="2016-10-22T09:15:56.000Z" itemprop="datePublished">2016-10-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                        
+
+
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-platform&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-platform&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>The Next Gen Platform(NGP) enables Infrastructure as Code (IaC) to provision and manage a complete infrastructure that set up a DC/OS cluster and applications on top of it. The complete infrastructure is setup on AWS Cloud.<br>The Infrastructure as code is written using <a href="https://www.terraform.io/" target="_blank" rel="external">Terraform</a>. </p>
+<p>The different modules that are installed and managed using this IaC are:<br> a. OpenVPN Server<br> b. DC/OS Cluster<br> c. Docker Private Registry<br> d. API Gateway<br> e. ELK<br> f. EC2 Container Registry<br> g. Marathon Snapshot</p>
+<h3 id="NGP-Infrastructure-Design"><a href="#NGP-Infrastructure-Design" class="headerlink" title="NGP Infrastructure Design"></a>NGP Infrastructure Design</h3><p><img src="/images/NGP_Architecture.png" alt="NGP Infrastructure Design"></p>
+<h3 id="Implementing-Next-Gen-Platform"><a href="#Implementing-Next-Gen-Platform" class="headerlink" title="Implementing Next Gen Platform"></a>Implementing Next Gen Platform</h3><h4 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites"></a>Pre-requisites</h4><ul>
+<li>AWS IAM account with administrator privileges (Save your AWS IAM access key ID and secret access key)</li>
+<li>Terraform (latest version)</li>
+<li>AWS CLI</li>
+<li>For the ease of Installation, we suggest using IaC-manager, to create a manager node. This IaC will create the following for you:<ul>
+<li>VPC</li>
+<li>Management Subnet</li>
+<li>Internet Gateway</li>
+<li>IAM Role with required policies attached</li>
+<li>Manager Node (CentOS)<br>If not using IaC-manager, Please create the above resources (except Manager Node).</li>
+</ul>
+</li>
+<li>Accept Software Terms of AWS Marketplace for CentOS/CoreOs/OpenVPN Access Server. </li>
+<li>Setup Tyk Hybrid account from <a href="https://cloud.tyk.io/signup" target="_blank" rel="external">https://cloud.tyk.io/signup</a> for running Tyk API gateway </li>
+<li>A hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancers.</li>
+</ul>
+<h4 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h4><ul>
+<li><p>Export AWS credentials as bash variables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export AWS_ACCESS_KEY_ID=&quot;anaccesskey&quot;</div><div class="line">export AWS_SECRET_ACCESS_KEY=&quot;asecretkey&quot;</div><div class="line">export AWS_DEFAULT_REGION=&quot;ap-northeast-1&quot;  //(e.g. ap-northeast-1 for Tokyo and ap-southeast-1 for Singapore region)</div></pre></td></tr></table></figure>
+</li>
+<li><p>Clone the repo <a href="https://github.com/microservices-today/IaC-platform" target="_blank" rel="external">IaC-platform</a></p>
+</li>
+<li>Change directory to IaC-platform</li>
+<li>Run ./configure.sh to decide which modules to run (The different modules are explained later in this blog)</li>
+<li>Copy terraform.dummy to terraform.tfvars</li>
+<li><p>If you are using [IaC-Manager][iac-manager], run </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~/terraform.out &gt;&gt; ~/IaC-dcos/terraform.tfvars</div></pre></td></tr></table></figure>
+</li>
+<li><p>Modify params in <code>terraform.tfvars</code> for required modules</p>
+</li>
+<li>(Optional) Modify params in <code>variable.tf</code> to change <strong>default values</strong> including subnet or add AMI accordingly to your aws region</li>
+<li>Run <code>terraform plan</code> to see the plan to execute.</li>
+<li>Run <code>terraform apply</code> to run the scripts.</li>
+<li>You may have <code>prod/dev/stage</code> configurations in <code>terraform.tfvars.{prod/dev/stage}</code> files (already ignored by <code>.gitignore</code>).</li>
+</ul>
+<h4 id="Steps-to-Import-a-New-Module"><a href="#Steps-to-Import-a-New-Module" class="headerlink" title="Steps to Import a New Module"></a>Steps to Import a New Module</h4><ul>
+<li>Create a folder with module-name in modules directory and add the following files within that folder:<br>a. module-name.tf : File to create and manage module.<br>b. module-name.dummy : Dummy values for the module.<br>c. module-name-variables.tf : Variables required for the module.<br>d. module-name-output.tf : Outputs to be displayed after execution.</li>
+<li>Add module-name to module array in configure.sh.</li>
+</ul>
+<h4 id="Monitoring-DC-OS-Cluster"><a href="#Monitoring-DC-OS-Cluster" class="headerlink" title="Monitoring DC/OS Cluster"></a>Monitoring DC/OS Cluster</h4><ul>
+<li><a href="http://www.sysdig.org/" target="_blank" rel="external">Sysdig</a> containers will be running in all DC/OS nodes for proper monitoring of instances through sysdig cloud.</li>
+<li><a href="https://github.com/microservices-today/filebeat-docker" target="_blank" rel="external">Filebeat-Docker</a> containers will be running in all dcos nodes for dcos and marathon log capturing. By installing Iac-Elk, you will be able to monitor the logs through AWS elasticsearch service.</li>
+</ul>
+<h4 id="Outputs"><a href="#Outputs" class="headerlink" title="Outputs"></a>Outputs</h4><p>The following outputs will be generated after running the IaC:</p>
+<ul>
+<li>OpenVPN URL and credentials</li>
+<li>DC/OS URL</li>
+</ul>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><ul>
+<li>Provide the latest stable version while running the “configure.sh” bash script.</li>
+<li>Always provide a uniquely identifiable pre-tag and post-tag for your deployments.</li>
+<li>Adhere to AWS naming conventions when providing names for AWS resources.</li>
+</ul>
+<h3 id="OpenVPN-Server"><a href="#OpenVPN-Server" class="headerlink" title="OpenVPN Server"></a>OpenVPN Server</h3><p>OpenVPN is an open-source software application that implements virtual private network (VPN) for creating secure connections to remote     access facilities. This platform will install an OpenVPN server using AWS OpenVPN Access Server AMI. Steps to setup OpenVPN server using terraform can be found at IaC-openvpn.<br>Running the Next Generation Platform will give you the OpenVPN connect URL and Admin URL along with the credentials.</p>
+<h4 id="Connecting-to-VPN"><a href="#Connecting-to-VPN" class="headerlink" title="Connecting to VPN"></a>Connecting to VPN</h4><ul>
+<li>Install OpenVPN client on local machine.</li>
+<li>Download the client config file.<br>a. Browse to <a href="https://OpenVPN_URL/" target="_blank" rel="external">https://OpenVPN_URL/</a> or <a href="https://OpenVPN_Public_IP" target="_blank" rel="external">https://OpenVPN_Public_IP</a><br>b. Give the openvpn admin credentials<br>c. Download the client.ovpn file by clicking Yourself(user-locked profile)<br>   <img src="/images/openVPN.png" alt="OpenVPN Connect"><br>d. Run the OpenVPN client with the downloaded client config file    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openvpn --config client.ovpn</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  e. For MaC: Follow the link <a href="https://openvpn.net/index.php/access-server/docs/quick-start-guide/495-connecting-to-openvpn-access-server-using-the-connect-client-on-mac.html" target="_blank" rel="external">OpenVPN</a></p>
+<p>  Once connected to the VPN, the users can access DC/OS web interface and Jenkins Web Interface.<br>  Accessing Tyk dashboard does not require a VPN connection.</p>
+<h3 id="DC-OS-Cluster"><a href="#DC-OS-Cluster" class="headerlink" title="DC/OS Cluster"></a>DC/OS Cluster</h3><p>DC/OS is a distributed operating system based on Apache Mesos. It enables the management of multiple machines and simplifies the installation and management of distributed services.<br>The documentation for DC/OS can be found at DC/OS. Steps to set up a DC/OS cluster in AWS Cloud using terraform can be found at IaC-DC/OS.<br>After running the IaC for Next Generation Platform, you can launch the DC/OS web interface by entering the DC/OS Url (Given as output for IaC).</p>
+<p><img src="/images/DCOS.png" alt="DC/OS Web Interface"></p>
+<h3 id="Tyk-API-Gateway"><a href="#Tyk-API-Gateway" class="headerlink" title="Tyk API Gateway"></a>Tyk API Gateway</h3><p>Tyk is an Open Source API Management Platform and Gateway. Our full Tyk stack consists of multiple components working together, the three most important ones are:</p>
+<ul>
+<li>Tyk Gateway: This does all the heavy lifting, and is the actual proxy doing all the work</li>
+<li>Tyk Dashboard: This is the GUI to control your gateways and view analytics, as well as an extended Dashboard REST API that enables granular integration</li>
+<li>Tyk Pump: A data processor that moves analytics data from your gateways (redis) into other data sinks, most importantly MongoDB for the dashboard to process.</li>
+</ul>
+<p>The git repo for setting Tyk on DC/OS using terraform is available at <a href="https://github.com/microservices-today/IaC-api-gateway" target="_blank" rel="external">IaC-api-gateway</a>. The pre-requisite would be to setup Tyk Hybrid account from <a href="https://cloud.tyk.io/signup" target="_blank" rel="external">https://cloud.tyk.io/signup</a>.</p>
+<ul>
+<li>Tyk dashboard is accessible at <a href="http://admin.cloud.tyk.io/" target="_blank" rel="external">http://admin.cloud.tyk.io/</a> </li>
+<li>Provide the credentials that were configured while running NGP<br><img src="/images/Tyk-API-Gateway.png" alt="Tyk API Gateway Dashboard"><br><img src="/images/Tyk-API.png" alt="Tyk Registered API"></li>
+</ul>
+<h3 id="Docker-Private-Registry"><a href="#Docker-Private-Registry" class="headerlink" title="Docker Private Registry"></a>Docker Private Registry</h3><p>The registry is a stateless, server side application that stores and distributes Docker images. NGP uses docker private registry to own the image distribution pipeline. It integrates image storage and distribution tightly into in-house deployment workflow.<br>The git repo for running docker private registry on DC/OS is available at <a href="https://github.com/microservices-today/IaC-dcos-docker-registry" target="_blank" rel="external">IaC-dcos-docker-registry</a>.</p>
+<p>Running NGP will create Docker Private Registry container with virtual IP: 192.168.0.1. The registry storage uses S3 bucket.<br>The S3 bucket name and region are specified while running the IaC. The storage root directory is set to “/docker-registry”.<br>To test the app, follow the below steps:<br>a. Pull any public docker image<br>   <code>docker pull nginx</code><br>b. Tag the image with the IP of docker private registry app<br>   <code>docker tag nginx 192.168.0.1/nginx</code><br>c. Push the image to docker private registry<br>   <code>docker push 192.168.0.1/nginx</code><br>   The above steps will create a folder named docker-registry inside your specified S3 bucket. The docker image should be available in that folder.</p>
+<h3 id="ELK"><a href="#ELK" class="headerlink" title="ELK"></a>ELK</h3><p>Elasticsearch, along with Logstash and Kibana, provides a powerful platform for indexing, searching and analyzing log data.</p>
+<h5 id="Filebeat"><a href="#Filebeat" class="headerlink" title="Filebeat"></a>Filebeat</h5><p>Filebeat is a lightweight, open source shipper for log file data. Filebeat tails logs and quickly sends this information to Logstash for further parsing and enrichment.</p>
+<h5 id="Filebeat-Docker"><a href="#Filebeat-Docker" class="headerlink" title="Filebeat-Docker"></a>Filebeat-Docker</h5><p><a href="https://github.com/microservices-today/filebeat-docker" target="_blank" rel="external">Filebeat-Docker</a> IaC creates a filebeat docker image. This docker image is configured to monitor <code>mesos</code> and <code>marathon app</code> logs. It allows to pass the logstash uri as an environment variable to the docker.<br>AWS provides a kibana interface for elasticsearch module. For accessing the elasticsearch or kibana though browser you have to update the your system IP address to the elasticsearch access policy as shown below:</p>
+<p> <img src="/images/ELK-Access-Policy.png" alt="Modify Access Policy"></p>
+<p> Kibana dashboard URL is available within AWS Elasticsearch Service as shown below:<br> <img src="/images/ELK-Kibana-URL.png" alt="Kibana URL"></p>
+<p> Accessing the Kibana URL will give you a dashboard as shown below:<br> <img src="/images/Kibana-dashboard.png" alt="Kibana Dashboard"></p>
+<h3 id="Marathon-Snapshot"><a href="#Marathon-Snapshot" class="headerlink" title="Marathon Snapshot"></a>Marathon Snapshot</h3><p><a href="https://github.com/microservices-today/IaC-marathon-snapshots" target="_blank" rel="external">Marathon snapshot</a> IaC is used to take snapshots of marathon applications. These snapshots are stored in a S3 bucket (Bucket name is specified while running NGP).<br>This is performed by running a Lambda function which is periodically triggered by a CloudWatch metric.<br>This app takes snapshots of marathon applications every hour.<br>The IaC, also creates an AWS API gateway to trigger the Lambda function in order to restore the marathon snapshot.</p>
+<h3 id="EC2-Container-Registry"><a href="#EC2-Container-Registry" class="headerlink" title="EC2 Container Registry"></a>EC2 Container Registry</h3><p>EC2 Container Registry (ECR) is a fully-managed Docker container registry by Amazon. NGP will deploy a marathon container that performs the ECR-Login in regular intervals. It then places the compressed the docker config in a location (shared location across all the agents) where the marathon can access.<br>It can be used as an alternative to the “Docker Private Registry” app discussed earlier.<br>To test the app, follow the below steps:<br>a. Pull any public docker image<br>b. Tag the image with the ID of EC2 container registry<br>c. Push the image to EC2 container registry</p>
+<h3 id="The-Twelve-Factors-of-Next-Gen-Platform"><a href="#The-Twelve-Factors-of-Next-Gen-Platform" class="headerlink" title="The Twelve Factors of Next Gen Platform"></a>The Twelve Factors of Next Gen Platform</h3><ul>
+<li>Codebase</li>
+</ul>
+<p>The code repository for “The Next Generation Platform” is always tracked in Git version control system. It is a distributed system with multiple codebases.<br>Each component/module in NGP is an app and each individually comply with twelve-factor.</p>
+<ul>
+<li>Dependencies</li>
+</ul>
+<p>NGP relies on explicit dependencies which are mentioned as pre-requisites.<br>It does not rely on implicit existence of system-wide packages.</p>
+<ul>
+<li>Config</li>
+</ul>
+<p>The app specific configurations (such as credentials to external services, resource handles to caches) are not stored as constants in the code.<br>They are strictly separated from the code and they vary across environments(staging, production, development).</p>
+<ul>
+<li>Backing Services</li>
+</ul>
+<p>A backing service is any service the app consumes over the network as part of its normal operation.<br>NGP uses the caching system Redis for Tyk API Gateway and binary asset service, Amazon S3.</p>
+<ul>
+<li>Code Release</li>
+</ul>
+<p>The release processes for NGP are managed automatically using Jenkins. </p>
+<ul>
+<li>Processes</li>
+</ul>
+<p>The ‘Next Generation Platform’ runs applications as stateless docker containers.</p>
+<ul>
+<li>Port binding</li>
+</ul>
+<p>The NGP executes the applications inside docker containers. These containers exports services by binding to a port and listening to requests coming on that port.<br>The routing layer handles routing requests from a public-facing hostname to the port-bound processes.</p>
+<ul>
+<li><p>Concurrency </p>
+<p>All the running apps in NGP can be scaled using the auto-scaling feature.</p>
+</li>
+<li><p>Disposability</p>
+</li>
+</ul>
+<p>The apps run using NGP are disposable,meaning they can be started or stopped at a moment’s notice.<br>This facilitates rapid deployment of code or config changes.</p>
+<ul>
+<li>Dev/prod parity</li>
+</ul>
+<p>The NGP keeps its development, staging and production environments as similar as possible.<br>The NGP is designed for continuous deployment by keeping the gap between production and development small.</p>
+<ul>
+<li>Logs</li>
+</ul>
+<p>The NGP does not attempt to write or manage log files. Each running process writes its event stream to ‘stdout’. This platform has its own mechanism to rotate the logs generated by the apps.<br>It uses Filebeat to collect the logs and is processed using ELK.</p>
+<ul>
+<li>Admin Processes</li>
+</ul>
+<p>The admin/management processes are run in an identical environment as the NGP. They run against a release, using the same codebase and config.<br>The developers use ssh or other remote command execution mechanism to run administration tasks.</p>
+<h3 id="DevOps-Best-Practices"><a href="#DevOps-Best-Practices" class="headerlink" title="DevOps Best Practices"></a>DevOps Best Practices</h3><ul>
+<li>Active participation : developers, operations staff, and support people must work closely together on a regular basis.</li>
+<li>Integrated change management : change management is the act of ensuring successful and meaningful evolution of the IT infrastructure to better support the overall organization. The NGP architecture is continuously evolved to ensure high availability.</li>
+<li>Continuous Integration : Continuous integration (CI) is the discipline of building and validating a project, through automated regression testing and sometimes code analysis whenever updated code is checked into the version control system. NGP uses Jenkins to ensure this.</li>
+<li>Integrated Deployment Planning : Experienced development teams will do deployment planning continuously throughout construction with active stakeholder participation from development, operations, and support groups.</li>
+<li>Continuous Deployment : With continuous deployment, when your integration is successful in one sandbox, your changes are automatically promoted to the next sandbox, and integration is automatically started there. NGP uses Jenkins for enabling Continuous deployment of applications.</li>
+<li>Application Monitoring : This is the operational practice of monitoring running solutions and applications once they are in production. NGP uses ELK along with file-beats for log monitoring. This also implements Sysdig for monitoring using Sysdig cloud.</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/10/22/The-Next-Gen-Platform/" data-id="civ9gj026000arjlnycauzyx3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/10/22/The-Next-Gen-Platform/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/10/22/The-Next-Gen-Platform/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-IaC-dcos" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<a href="/2016/07/21/IaC-dcos/" itemprop="url">
+            <img src="/images/iac-wrapper.jpg" class="article-banner" />
+        </a>
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/07/21/IaC-dcos/">Creating a DCOS cluster in AWS using terraform.</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/07/21/IaC-dcos/">
+            <time datetime="2016-07-21T09:15:56.000Z" itemprop="datePublished">2016-07-21</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/dcos/">dcos</a>
+    </div>
+
+                        
+
+
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-dcos&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-dcos&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="IaC-DCOS"><a href="#IaC-DCOS" class="headerlink" title="IaC: DCOS"></a>IaC: DCOS</h3><p>This terraform script will setup the DCOS cluster in AWS.</p>
+<ul>
+<li>CentOS (Bootstrap Node)</li>
+<li>CoreOS (Master and Agent Nodes)</li>
+<li>Private subnet</li>
+<li>Public subnet</li>
+<li>Internet gateway</li>
+</ul>
+<h4 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites"></a>Pre-requisites</h4><ul>
+<li>An IAM account with administrator privileges.</li>
+<li>(skip if you use <a href="https://github.com/microservices-today/IaC-manager" target="_blank" rel="external">IaC-manager</a>) An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.<br>We need the following information prior to starting the script.<ul>
+<li>public_security_group_id</li>
+<li>public_subnet_id</li>
+<li>vpc_id</li>
+<li>key_pair_name<br>We have an <a href="https://github.com/microservices-today/IaC-manager" target="_blank" rel="external">Iac-manager</a> which can do this task.</li>
+</ul>
+</li>
+<li>Install terraform in the machine from <a href="https://www.terraform.io/intro/getting-started/install.html" target="_blank" rel="external">here</a>.</li>
+<li><p>Public Key Access with Agent support/ Agent Forwarding:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh-add &lt;key_pair_name&gt;.pem</div><div class="line">ssh -A centos@&lt;manager_public_ip&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>A hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancer.</p>
+<ul>
+<li>If you do not want to create a dns name for load balancer, remove the <code>aws_route53_record</code> resource from <code>elb-master.tf</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Steps-to-install-DCOS"><a href="#Steps-to-install-DCOS" class="headerlink" title="Steps to install DCOS"></a>Steps to install DCOS</h4><ul>
+<li><p>Export AWS credentials as bash variables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export AWS_ACCESS_KEY_ID=&quot;anaccesskey&quot;</div><div class="line">export AWS_SECRET_ACCESS_KEY=&quot;asecretkey&quot;</div><div class="line">export AWS_DEFAULT_REGION=&quot;ap-northeast-1&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Clone this repo .</p>
+</li>
+<li>Copy your AWS ssh key into current dir.</li>
+<li><code>cp terraform.dummy terraform.tfvars</code></li>
+<li>If you are using <a href="https://github.com/microservices-today/IaC-manager" target="_blank" rel="external">IaC-Manager</a>, run <code>cat ~/terraform.out &gt;&gt; ~/IaC-dcos/terraform.tfvars</code> once.</li>
+<li>Modify params in <code>terraform.tfvars</code></li>
+<li>(Optional) Modify params in <code>variable.tf</code> to change <strong>default values</strong> including subnet or add AMI accordingly to your aws region</li>
+<li>Run <code>terraform plan</code> to see the plan to execute.</li>
+<li>Run <code>terraform apply</code> to run the scripts.</li>
+<li>You may have <code>prod/dev/stage</code> configurations in<br><code>terraform.tfvars.{prod/dev/stage}</code> files (already ignored by <code>.gitignore</code>).</li>
+</ul>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><ul>
+<li>The AWS key name, AWS key path, VPC, Subnet, Security Group will be updated to <code>terraform.dummy</code><br>and AWS ssh key will be copied to the current directory if an installation is done by <a href="https://github.com/microservices-today/IaC-manager" target="_blank" rel="external">IaC-Manager</a>.<br>Terraform v0.7.0 or above is required.</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/07/21/IaC-dcos/" data-id="civ9gj01y0006rjlnpq9ez9az" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/07/21/IaC-dcos/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/07/21/IaC-dcos/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="iac-manager-IaC-Manager" class="article article-type-iac-manager" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<a href="/2016/07/19/IaC-Manager/" itemprop="url">
+            <img src="/images/iac-manager.jpg" class="article-banner" />
+        </a>
+	
+
+
+
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/07/19/IaC-Manager/">Creating a Managment Environment in AWS with terraform.</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/07/19/IaC-Manager/">
+            <time datetime="2016-07-19T05:50:30.000Z" itemprop="datePublished">2016-07-19</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/manager/">manager</a>
+    </div>
+
+                        
+
+
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-manager&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=microservices-today&repo=IaC-manager&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="IaC-Manager-Node-Jump-Server"><a href="#IaC-Manager-Node-Jump-Server" class="headerlink" title="IaC: Manager Node (Jump Server)"></a>IaC: Manager Node (Jump Server)</h3><p>This terraform script will setup an infra for management in AWS:</p>
+<ul>
+<li>CentOS (Manager Node)</li>
+<li>VPC</li>
+<li>Public subnet</li>
+<li>Internet gateway</li>
+</ul>
+<h4 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites"></a>Pre-requisites</h4><ul>
+<li>An IAM account with administrator privileges.</li>
+<li>Install <a href="https://www.terraform.io/intro/getting-started/install.html" target="_blank" rel="external">terraform</a> on your machine.</li>
+<li><p>Public Key Access with Agent support/ Agent Forwarding:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssh-add &lt;key_pair_name&gt;.pem</div><div class="line">ssh -A centos@&lt;manager_public_ip&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Steps-for-installation"><a href="#Steps-for-installation" class="headerlink" title="Steps for installation"></a>Steps for installation</h4><ul>
+<li>Clone this repo .</li>
+<li><code>cp terraform.dummy terraform.tfvars</code></li>
+<li>Modify params in <code>terraform.tfvars</code></li>
+<li>Modify params in <code>variable.tf</code> to change subnet or add AMI accordingly to your aws region</li>
+<li><p>Export AWS credentials as bash variables (e.g. <code>ap-northeast-1</code> for Tokyo and <code>ap-southeast-1</code> for Singapore region):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> AWS_ACCESS_KEY_ID=<span class="string">"anaccesskey"</span></div><div class="line"><span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=<span class="string">"asecretkey"</span></div><div class="line"><span class="built_in">export</span> AWS_DEFAULT_REGION=<span class="string">"ap-northeast-1"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>terraform plan</code> to see the plan to execute.</p>
+</li>
+<li>Run <code>terraform apply</code> to run the scripts.</li>
+<li>You may have <code>prod/dev/stage</code> configurations in<br><code>terraform.tfvars.{prod/dev/stage}</code> files (already ignored by <code>.gitignore</code>).</li>
+</ul>
+<h4 id="Generate-Docs"><a href="#Generate-Docs" class="headerlink" title="Generate Docs"></a>Generate Docs</h4><p>Generate terraform documentation by running <code>bash generate-docs.sh</code></p>
+<h4 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h4><ul>
+<li>SSH into the manager node and check whether <code>terraform.out</code> in <code>home/centos</code> contains:<br>a record of the VPC, Subnet, Security Group and Nat gateway ID.</li>
+<li>More details on <a href="https://github.com/segmentio/terraform-docs" target="_blank" rel="external">terraform-docs</a>.</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://microservices-today.github.io/2016/07/19/IaC-Manager/" data-id="civ9gj01v0005rjlnd6en5gpj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://microservices-today.github.io/2016/07/19/IaC-Manager/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://microservices-today.github.io/2016/07/19/IaC-Manager/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/03/DCOS-Disaster-Recovery/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/03/DCOS-Disaster-Recovery/" class="title">DCOS Disaster Recovery</a></p>
+                            <p class="item-date"><time datetime="2016-11-03T11:37:05.000Z" itemprop="datePublished">2016-11-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/31/Debugging-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/31/Debugging-DCOS/" class="title">Debugging DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-31T03:39:33.000Z" itemprop="datePublished">2016-10-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/30/Troubleshoot-CoreOS-in-general-which-you-will-need-in-DCOS/" class="title">Troubleshoot CoreOS in general which you will need in DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-30T03:37:29.000Z" itemprop="datePublished">2016-10-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/29/Troubleshooting-common-scenarios-in-DCOS/" class="title">Troubleshooting common scenarios in DCOS</a></p>
+                            <p class="item-date"><time datetime="2016-10-29T10:20:49.000Z" itemprop="datePublished">2016-10-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/28/Nginx-Marathon-App-example/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/28/Nginx-Marathon-App-example/" class="title">Nginx Marathon App example</a></p>
+                            <p class="item-date"><time datetime="2016-10-28T09:15:38.000Z" itemprop="datePublished">2016-10-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DCOS-Disaster-Recovery/">DCOS Disaster Recovery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Debugging-DCOS/">Debugging DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx-Marathon-App-example/">Nginx Marathon App example</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Troubleshoot-CoreOS-in-DCOS/">Troubleshoot CoreOS in DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Troubleshooting-common-scenarios-in-DCOS/">Troubleshooting common scenarios in DCOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dcos/">dcos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manager/">manager</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/DCOS-Disaster-Recovery/" style="font-size: 10px;">DCOS Disaster Recovery</a> <a href="/tags/Debugging-DCOS/" style="font-size: 10px;">Debugging DCOS</a> <a href="/tags/Nginx-Marathon-App-example/" style="font-size: 20px;">Nginx Marathon App example</a> <a href="/tags/Troubleshoot-CoreOS-in-DCOS/" style="font-size: 10px;">Troubleshoot CoreOS in DCOS</a> <a href="/tags/Troubleshooting-common-scenarios-in-DCOS/" style="font-size: 10px;">Troubleshooting common scenarios in DCOS</a> <a href="/tags/dcos/" style="font-size: 10px;">dcos</a> <a href="/tags/manager/" style="font-size: 10px;">manager</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 microservices-today<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+        this.page.identifier = 'undefined';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'microservicestoday' + '.disqus.com/count.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
